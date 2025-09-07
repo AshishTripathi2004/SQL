@@ -1,0 +1,26 @@
+
+SET AUTOCOMMIT=0;
+START TRANSACTION;
+
+CREATE DATABASE transactionsql;
+USE transactionsql;
+
+CREATE TABLE users(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    age INT NOT NULL CHECK(age>0)
+);
+
+INSERT INTO users(age) VALUES (10),(20),(30);
+SAVEPOINT p1;
+
+INSERT INTO users(age) VALUES(10);
+SELECT * FROM users;
+
+ROLLBACK TO p1;
+SELECT * FROM users;
+
+RELEASE SAVEPOINT p1;
+COMMIT;
+
+-- DROP DATABASE transactionsql;
+
